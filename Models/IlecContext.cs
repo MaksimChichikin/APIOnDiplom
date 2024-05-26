@@ -17,6 +17,10 @@ public partial class IlecContext : DbContext
 
     public virtual DbSet<All> Alls { get; set; }
 
+    public virtual DbSet<Chat> Chats { get; set; }
+
+    public virtual DbSet<Message> Messages { get; set; }
+
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -31,9 +35,26 @@ public partial class IlecContext : DbContext
         {
             entity.ToTable("All");
 
+            entity.HasOne(d => d.IdMessageNavigation).WithMany(p => p.Alls)
+                .HasForeignKey(d => d.IdMessage)
+                .HasConstraintName("FK_All_Chat");
+
             entity.HasOne(d => d.IdUserNavigation).WithMany(p => p.Alls)
                 .HasForeignKey(d => d.IdUser)
                 .HasConstraintName("FK_All_User");
+        });
+
+        modelBuilder.Entity<Chat>(entity =>
+        {
+            entity.ToTable("Chat");
+        });
+
+        modelBuilder.Entity<Message>(entity =>
+        {
+            entity.ToTable("Message");
+
+            entity.Property(e => e.Contents).HasMaxLength(300);
+            entity.Property(e => e.Timestamp).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<Role>(entity =>

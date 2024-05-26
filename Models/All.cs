@@ -9,5 +9,9 @@ public partial class All
 
     public int? IdUser { get; set; }
 
+    public int? IdMessage { get; set; }
+
+    public virtual Chat? IdMessageNavigation { get; set; }
+
     public virtual User? IdUserNavigation { get; set; }
 }
