@@ -19,6 +19,13 @@ public class MessageController : ControllerBase
         var messages = await _messageService.GetMessagesAsync(senderId, receiverId);
         return Ok(messages);
     }
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<MessageDTO>>> GetAllMessages()
+    {
+        var messages = await _messageService.GetAllMessagesAsync();
+        return Ok(messages);
+    }
+
 
     [HttpPost]
     public async Task<ActionResult<MessageDTO>> SendMessage(MessageDTO messageDto)

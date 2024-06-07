@@ -4,6 +4,7 @@ using MyProApiDiplom.CommonAppData.User;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+
 namespace MyProApiDiplom.Controllers
 {
     [Route("api/[controller]")]
@@ -69,6 +70,17 @@ namespace MyProApiDiplom.Controllers
             }
 
             return NoContent();
+        }
+        [HttpPost("SendNotification")]
+        public async Task<IActionResult> SendNotification([FromBody] NotificationDTO notificationDto)
+        {
+            var success = await _userClass.SendNotificationAsync(notificationDto.Email, notificationDto.MessageBody);
+            if (!success)
+            {
+                return NotFound("User not found");
+            }
+
+            return Ok("Notification sent successfully");
         }
     }
 }

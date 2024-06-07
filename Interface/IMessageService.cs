@@ -7,6 +7,7 @@ namespace MyProApiDiplom.Services
     public interface IMessageService
     {
         Task<IEnumerable<MessageDTO>> GetMessagesAsync(int senderId, int receiverId);
+        Task<IEnumerable<MessageDTO>> GetAllMessagesAsync();
         Task<MessageDTO> SendMessageAsync(MessageDTO messageDto);
     }
 }
